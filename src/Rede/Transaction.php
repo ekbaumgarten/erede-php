@@ -234,6 +234,11 @@ class Transaction implements RedeSerializable, RedeUnserializable
     private $paymentFacilitatorID;
 
     /**
+     * @var string | JSON
+     */
+    private $serializedJsonResponse;
+
+    /**
      * Transaction constructor.
      *
      * @param int $amount
@@ -399,6 +404,11 @@ class Transaction implements RedeSerializable, RedeUnserializable
         );
     }
 
+    public function getSerializedJsonResponse()
+    {
+        return $this->serializedJsonResponse;
+    }
+
     /**
      *
      * @param string $serialized
@@ -408,6 +418,7 @@ class Transaction implements RedeSerializable, RedeUnserializable
      */
     public function jsonUnserialize($serialized)
     {
+        $this->serializedJsonResponse = $serialized;
         $properties = json_decode($serialized);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
